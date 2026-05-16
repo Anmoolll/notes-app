@@ -56,7 +56,7 @@ router.get('/search', async (req: AuthRequest, res: Response, next: NextFunction
 // GET /notes/:id
 router.get('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const note = await notesService.getById(req.userId!, req.params.id);
+    const note = await notesService.getById(req.userId!, req.params.id as string);
     res.status(200).json(note);
   } catch (err) {
     handleError(err, res, next);
@@ -66,7 +66,7 @@ router.get('/:id', async (req: AuthRequest, res: Response, next: NextFunction) =
 // GET /notes/:id/versions  ← custom feature
 router.get('/:id/versions', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const versions = await notesService.getVersions(req.userId!, req.params.id);
+    const versions = await notesService.getVersions(req.userId!, req.params.id as string);
     res.status(200).json(versions);
   } catch (err) {
     handleError(err, res, next);
@@ -98,7 +98,7 @@ router.put(
   validate(updateNoteSchema),
   async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const note = await notesService.update(req.userId!, req.params.id, req.body);
+      const note = await notesService.update(req.userId!, req.params.id as string, req.body);
       res.status(200).json(note);
     } catch (err) {
       handleError(err, res, next);
@@ -109,7 +109,7 @@ router.put(
 // DELETE /notes/:id
 router.delete('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    await notesService.delete(req.userId!, req.params.id);
+    await notesService.delete(req.userId!, req.params.id as string);
     res.status(204).send();
   } catch (err) {
     handleError(err, res, next);
@@ -122,7 +122,7 @@ router.post(
   validate(shareNoteSchema),
   async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      await notesService.share(req.userId!, req.params.id, req.body.share_with_email);
+      await notesService.share(req.userId!, req.params.id as string, req.body.share_with_email);
       res.status(200).json({ message: 'Note shared successfully' });
     } catch (err) {
       handleError(err, res, next);
