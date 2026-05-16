@@ -1,17 +1,29 @@
 import 'dotenv/config';
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { connectDB } from './config/db';
 import authRoutes from './routes/auth.routes';
 import notesRoutes from './routes/notes.routes';
 import { errorHandler } from './middleware/errorHandler';
+import { authLimiter, apiLimiter } from './middleware/rateLimiter'; // new
 import { openapiSpec } from './openapi';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(apiLimiter);
+
+app.get('/health', (_req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    uptime: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString(),
+  });
+});
 
 // Routes
 app.use('/', authRoutes);
