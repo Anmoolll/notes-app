@@ -22,8 +22,8 @@ app.get('/openapi.json', (_req, res) => res.status(200).json(openapiSpec));
 
 app.get('/about', (_req, res) => {
   res.status(200).json({
-    name: 'Your Name',
-    email: 'your@email.com',
+    name: 'Anmol Agarwal',
+    email: 'anmolagarwa231@gmail.com',
     'my features': {
       'Note version history': 'Every PUT on a note saves the previous title and content to a versions array. Accessible via GET /notes/:id/versions. Chose this because it adds real product value — users can recover accidentally overwritten notes.',
       'Note tags': 'Notes can have string tags. Filter all notes by tag via GET /notes?tag=work. Allows lightweight organisation without folders.',
